@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="Candy Crush" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/Candy Crush" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/Candy Crush" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add directory="G:/mingw_dev_lib/SDL2/i686-w64-mingw32/include/SDL2" />
+			<Add directory="G:/mingw_dev_lib/SDL2_image/i686-w64-mingw32/include/SDL2" />
+			<Add directory="G:/mingw_dev_lib/SDL2_mixer/i686-w64-mingw32/include/SDL2" />
+			<Add directory="G:/mingw_dev_lib/SDL2_ttf/i686-w64-mingw32/include/SDL2" />
+		</Compiler>
+		<Linker>
+			<Add option="-lmingw32 -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer" />
+			<Add directory="G:/mingw_dev_lib/SDL2/i686-w64-mingw32/lib" />
+			<Add directory="G:/mingw_dev_lib/SDL2_image/i686-w64-mingw32/lib" />
+			<Add directory="G:/mingw_dev_lib/SDL2_mixer/i686-w64-mingw32/lib" />
+			<Add directory="G:/mingw_dev_lib/SDL2_ttf/i686-w64-mingw32/lib" />
+		</Linker>
+		<Unit filename="Animation.cpp" />
+		<Unit filename="Animation.h" />
+		<Unit filename="Audio.cpp" />
+		<Unit filename="Audio.h" />
+		<Unit filename="Background.cpp" />
+		<Unit filename="Background.h" />
+		<Unit filename="Candy.cpp" />
+		<Unit filename="Candy.h" />
+		<Unit filename="CandyBoard.cpp" />
+		<Unit filename="CandyBoard.h" />
+		<Unit filename="Constants.h" />
+		<Unit filename="Headers.h" />
+		<Unit filename="Texture.cpp" />
+		<Unit filename="Texture.h" />
+		<Unit filename="main.cpp" />
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

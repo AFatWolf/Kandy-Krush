@@ -1,0 +1,468 @@
+# depslib dependency file v1.0
+1557085735 source:c:\users\dell\desktop\candy crush handmade\candy crush\main.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+	<stdlib.h>
+	<stdio.h>
+	<iostream>
+	<sstream>
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+	"Texture.h"
+	"Candy.h"
+	"CandyBoard.h"
+	"Headers.h"
+	"Background.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl.h
+	"SDL_main.h"
+	"SDL_stdinc.h"
+	"SDL_assert.h"
+	"SDL_atomic.h"
+	"SDL_audio.h"
+	"SDL_clipboard.h"
+	"SDL_cpuinfo.h"
+	"SDL_endian.h"
+	"SDL_error.h"
+	"SDL_events.h"
+	"SDL_filesystem.h"
+	"SDL_gamecontroller.h"
+	"SDL_haptic.h"
+	"SDL_hints.h"
+	"SDL_joystick.h"
+	"SDL_loadso.h"
+	"SDL_log.h"
+	"SDL_messagebox.h"
+	"SDL_mutex.h"
+	"SDL_power.h"
+	"SDL_render.h"
+	"SDL_rwops.h"
+	"SDL_sensor.h"
+	"SDL_shape.h"
+	"SDL_system.h"
+	"SDL_thread.h"
+	"SDL_timer.h"
+	"SDL_version.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_main.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_stdinc.h
+	"SDL_config.h"
+	<sys/types.h>
+	<stdio.h>
+	<stdlib.h>
+	<stddef.h>
+	<stdarg.h>
+	<stdlib.h>
+	<malloc.h>
+	<stddef.h>
+	<stdarg.h>
+	<memory.h>
+	<string.h>
+	<strings.h>
+	<wchar.h>
+	<inttypes.h>
+	<stdint.h>
+	<ctype.h>
+	<math.h>
+	<float.h>
+	<alloca.h>
+	<malloc.h>
+	<malloc.h>
+	<malloc.h>
+	<stdlib.h>
+	<sal.h>
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_config.h
+	"SDL_platform.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_platform.h
+	"AvailabilityMacros.h"
+	"TargetConditionals.h"
+	<winapifamily.h>
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\begin_code.h
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\close_code.h
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_assert.h
+	"SDL_config.h"
+	"begin_code.h"
+	<signal.h>
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_atomic.h
+	"SDL_stdinc.h"
+	"SDL_platform.h"
+	"begin_code.h"
+	<mbarrier.h>
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_audio.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_endian.h"
+	"SDL_mutex.h"
+	"SDL_thread.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_error.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_endian.h
+	"SDL_stdinc.h"
+	<endian.h>
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_mutex.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_thread.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_atomic.h"
+	"SDL_mutex.h"
+	"begin_code.h"
+	<process.h>
+	<process.h>
+	<stdlib.h>
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_rwops.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_clipboard.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_cpuinfo.h
+	"SDL_stdinc.h"
+	<intrin.h>
+	<intrin.h>
+	<altivec.h>
+	<arm_neon.h>
+	<mm3dnow.h>
+	<immintrin.h>
+	<mmintrin.h>
+	<xmmintrin.h>
+	<emmintrin.h>
+	<pmmintrin.h>
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_events.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_keyboard.h"
+	"SDL_mouse.h"
+	"SDL_joystick.h"
+	"SDL_gamecontroller.h"
+	"SDL_quit.h"
+	"SDL_gesture.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_video.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_surface.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_pixels.h
+	"SDL_stdinc.h"
+	"SDL_endian.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_rect.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_pixels.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_surface.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_blendmode.h"
+	"SDL_rwops.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_blendmode.h
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_keyboard.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_keycode.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_keycode.h
+	"SDL_stdinc.h"
+	"SDL_scancode.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_scancode.h
+	"SDL_stdinc.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_mouse.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_joystick.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_gamecontroller.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_rwops.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_quit.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_gesture.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"SDL_touch.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_touch.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_filesystem.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_haptic.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"SDL_joystick.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_hints.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_loadso.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_log.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_messagebox.h
+	"SDL_stdinc.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_power.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_render.h
+	"SDL_stdinc.h"
+	"SDL_rect.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_sensor.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_shape.h
+	"SDL_stdinc.h"
+	"SDL_pixels.h"
+	"SDL_rect.h"
+	"SDL_surface.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_system.h
+	"SDL_stdinc.h"
+	"SDL_keyboard.h"
+	"SDL_render.h"
+	"SDL_video.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_timer.h
+	"SDL_stdinc.h"
+	"SDL_error.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540998544 g:\mingw_dev_lib\sdl2\i686-w64-mingw32\include\sdl2\sdl_version.h
+	"SDL_stdinc.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540997982 g:\mingw_dev_lib\sdl2_image\i686-w64-mingw32\include\sdl2\sdl_image.h
+	"SDL.h"
+	"SDL_version.h"
+	"begin_code.h"
+	"close_code.h"
+
+1556943009 c:\users\dell\desktop\candy crush handmade\candy crush\texture.h
+	<SDL_ttf.h>
+
+1556943183 source:c:\users\dell\desktop\candy crush handmade\candy crush\texture.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+	<stdlib.h>
+	<stdio.h>
+	<iostream>
+	"Texture.h"
+
+1557086011 source:c:\users\dell\desktop\candy crush handmade\candy crush\candy.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+	<stdlib.h>
+	<stdio.h>
+	<iostream>
+	<algorithm>
+	"Candy.h"
+	"Headers.h"
+
+1557086001 c:\users\dell\desktop\candy crush handmade\candy crush\candy.h
+	"Texture.h"
+	"Animation.h"
+
+1557113933 source:c:\users\dell\desktop\candy crush handmade\candy crush\candyboard.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+	<stdlib.h>
+	<stdio.h>
+	<iostream>
+	<algorithm>
+	<time.h>
+	<vector>
+	<queue>
+	"CandyBoard.h"
+	"Headers.h"
+	"Animation.h"
+
+1557081232 c:\users\dell\desktop\candy crush handmade\candy crush\candyboard.h
+	<vector>
+	"Candy.h"
+
+1557076033 c:\users\dell\desktop\candy crush handmade\candy crush\headers.h
+	"Texture.h"
+	<SDL_ttf.h>
+	<SDL_mixer.h>
+	"Audio.h"
+
+1557075589 c:\users\dell\desktop\candy crush handmade\candy crush\animation.h
+	"Texture.h"
+
+1557075589 source:c:\users\dell\desktop\candy crush handmade\candy crush\animation.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+	<stdio.h>
+	<iostream>
+	<algorithm>
+	"Animation.h"
+	"Headers.h"
+
+1556701865 source:c:\users\dell\desktop\candy crush handmade\candy crush\background.cpp
+	<SDL.h>
+	<SDL_image.h>
+	<string>
+	<stdio.h>
+	<iostream>
+	<algorithm>
+	<time.h>
+	"Headers.h"
+	"Background.h"
+
+1556700848 c:\users\dell\desktop\candy crush handmade\candy crush\background.h
+	<vector>
+	<time.h>
+	"Texture.h"
+
+1547322281 g:\mingw_dev_lib\sdl2_ttf\i686-w64-mingw32\include\sdl2\sdl_ttf.h
+	"SDL.h"
+	"begin_code.h"
+	"close_code.h"
+
+1540997992 g:\mingw_dev_lib\sdl2_mixer\i686-w64-mingw32\include\sdl2\sdl_mixer.h
+	"SDL_stdinc.h"
+	"SDL_rwops.h"
+	"SDL_audio.h"
+	"SDL_endian.h"
+	"SDL_version.h"
+	"begin_code.h"
+	"close_code.h"
+
+1557077989 c:\users\dell\desktop\candy crush handmade\candy crush\audio.h
+	<SDL_mixer.h>
+	<string>
+
+1557077989 source:c:\users\dell\desktop\candy crush handmade\candy crush\audio.cpp
+	<stdio.h>
+	"Audio.h"
+
