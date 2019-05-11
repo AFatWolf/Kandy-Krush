@@ -75,10 +75,12 @@ void Background::display()
         // fade out
         background[whichToDisplay].setAlpha(std::max(whichAlpha - fadeSpeed, 0));
         // more clear
-        background[nextToDisplay].setAlpha(std::min(nextAlpha + fadeSpeed, 0xFF));
+        // background[nextToDisplay].setAlpha(std::min(nextAlpha + fadeSpeed, 0xFF));
+        if(background[nextToDisplay].getAlpha() == 0)
+            background[nextToDisplay].setAlpha(0xFF);
     }
 
-    for(int i = 0; i < numberOfBackground; i++)
+    for(int i = numberOfBackground; i >= 0; i--)
     {
         if(background[i].getAlpha() != 0)
             background[i].render(gRenderer, 0, 0);
