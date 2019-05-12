@@ -72,6 +72,7 @@ void CandyBoard::handleEvent( SDL_Event* e )
         {
             switch( e->type )
             {
+
             case SDL_MOUSEBUTTONDOWN:
                 {
                     // first candy to touch
@@ -82,6 +83,7 @@ void CandyBoard::handleEvent( SDL_Event* e )
                     }
                     break;
                 }
+            /*
             case SDL_MOUSEMOTION:
                 if(mouse_state & SDL_BUTTON(SDL_BUTTON_LEFT) && last_candy_choosen.x >= 0 && last_candy_choosen.y >= 0)
                 {
@@ -137,11 +139,14 @@ void CandyBoard::handleEvent( SDL_Event* e )
                     }
                     break;
                 }
+            */
             case SDL_MOUSEBUTTONUP:
-                if(last_candy_choosen.x != -1 && last_candy_choosen.y != -1)
+                printf("Choose X %d y %d\n", x, y);
+                if(last_candy_choosen.x != -1 && last_candy_choosen.y != -1 && x != last_candy_choosen.x && y != last_candy_choosen.y)
                 {
                     // swap
                     // meaning that it is adjacent cell and not itself
+                    printf("Next choose: X %d Y %d\n", x, y);
                     if(abs(getPositionX(last_candy_choosen.x) - getPositionX(x)) + abs(getPositionY(last_candy_choosen.y) - getPositionY(y)) <= 1
                         && abs(getPositionX(last_candy_choosen.x) - getPositionX(x)) + abs(getPositionY(last_candy_choosen.y) - getPositionY(y)) != 0)
                     {
@@ -173,7 +178,7 @@ void CandyBoard::handleEvent( SDL_Event* e )
                                 tmp_last_candy.render(gRenderer, tmp_last_candy.getX() + i * (abs(dx) / dx), tmp_last_candy.getY());
                                 tmp_current_candy.render(gRenderer, tmp_current_candy.getX() - i * (abs(dx) / dx), tmp_last_candy.getY());
                                 SDL_RenderPresent(gRenderer);
-                                //SDL_Delay(100);
+                                //delay(100);
                             }
                         }
                         // else if vertically
@@ -192,7 +197,7 @@ void CandyBoard::handleEvent( SDL_Event* e )
                                 tmp_last_candy.render(gRenderer, tmp_last_candy.getX(), tmp_last_candy.getY() + i * (abs(dy) / dy));
                                 tmp_current_candy.render(gRenderer, tmp_current_candy.getX(), tmp_current_candy.getY() - i * (abs(dy) / dy));
                                 SDL_RenderPresent(gRenderer);
-                                //SDL_Delay(100);
+                                //delay(100);
                             }
 
                         }
@@ -267,7 +272,7 @@ void CandyBoard::handleEvent( SDL_Event* e )
                                 renderFrame();
                                 displayCandyBoard(gRenderer);
                                 SDL_RenderPresent(gRenderer);
-                                SDL_Delay(100);
+                                delay(100);
                                 printf("Last type: %d Cur Type: %d\n",last_type, cur_type);
 
                                 if(last_candy_vertical_match >= 3)
@@ -367,7 +372,7 @@ void CandyBoard::handleEvent( SDL_Event* e )
                                 renderFrame();
                                 displayCandyBoard(gRenderer);
                                 SDL_RenderPresent(gRenderer);
-                                SDL_Delay(100);
+                                delay(100);
                             }
                         }
                         // reIndex() : to fill the EMPTY spot
@@ -410,9 +415,9 @@ void CandyBoard::handleEvent( SDL_Event* e )
                                 displayCandyBoard(gRenderer);
                                 drop.fall(gRenderer);
                                 SDL_RenderPresent(gRenderer);
-                                SDL_Delay(10);
+                                delay(10);
                             } while(drop.getStatus() != STANDING_STILL);
-                            SDL_Delay(500);
+                            delay(500);
 
                         }
 
@@ -567,8 +572,8 @@ int CandyBoard::reIndex()
 
 
             SDL_RenderPresent(gRenderer);
-            SDL_Delay(10);
-            //SDL_Delay(2000);
+            delay(10);
+            //delay(2000);
         } while(falling == true);
 
         // show after falling down
@@ -577,7 +582,7 @@ int CandyBoard::reIndex()
         displayCandyBoard(gRenderer);
         SDL_RenderPresent(gRenderer);
         // delay so that player can see it
-        SDL_Delay(200);
+        delay(200);
         // play combo sound
         // only have 12 landing sound so ...
         Sound combo = (Sound) std::min((int) COMBO_SOUND1 + times, (int) COMBO_SOUND12);
@@ -693,6 +698,10 @@ void CandyBoard::sugarCrush()
 {
     // for when there is still special candy left
     bool have_special = false;
+    int sweetOrNot = 0;
+    int old_man_start_x;
+    int old_man_start_y;
+    int display = -1;
     do
     {
         // reset
@@ -701,6 +710,8 @@ void CandyBoard::sugarCrush()
             for(int j = 0; j < mColumns; j++)
             {
                 Candy* tmp_candy = getCandy(j ,i);
+                if(tmp_candy == NULL)
+                    continue;
                 if(tmp_candy->getType() != NORMAL)
                 {
                     have_special = true;
@@ -739,49 +750,49 @@ void CandyBoard::sugarCrush()
         // call reindex after sugar crush
        // reIndex() : to fill the EMPTY spot
         // return: nunber of candies being deleted
-        int sweetOrNot = reIndex();
-        int old_man_start_x = SCREEN_WIDTH / 3;
-        int old_man_start_y = SCREEN_HEIGHT / 3;
-        int display = -1;
-        printf("Sweet or not: %d\n", sweetOrNot);
-        // DIVINE
-        if(sweetOrNot >= 30)
-        {
-            display = DIVINE;
-        }
-        // DELICIOUS
-        else if(sweetOrNot >= 24)
-        {
-            display = DELICIOUS;
-        }
-        else if(sweetOrNot >= 18)
-        {
-            display = TASTY;
-        }
-        else if(sweetOrNot >= 12)
-        {
-            display = SWEET;
-        }
-        if(display != -1)
-        {
-            oldManVoice[display].play();
-            Animation drop;
-            drop.setTexture(&oldManTexture[display]);
-            drop.setPosition(old_man_start_x, 0);
-            drop.setDest(old_man_start_x, old_man_start_y);
-            do
-            {
-                SDL_RenderClear(gRenderer);
-                renderFrame();
-                displayCandyBoard(gRenderer);
-                drop.fall(gRenderer);
-                SDL_RenderPresent(gRenderer);
-                SDL_Delay(10);
-            } while(drop.getStatus() != STANDING_STILL);
-            SDL_Delay(500);
-        }
+        sweetOrNot += reIndex();
+        old_man_start_x = SCREEN_WIDTH / 3;
+        old_man_start_y = SCREEN_HEIGHT / 3;
+        printf("Done\n");
     } while(have_special == true);
 
+    printf("Sweet or not: %d\n", sweetOrNot);
+    // DIVINE
+    if(sweetOrNot >= 30)
+    {
+        display = DIVINE;
+    }
+    // DELICIOUS
+    else if(sweetOrNot >= 24)
+    {
+        display = DELICIOUS;
+    }
+    else if(sweetOrNot >= 18)
+    {
+        display = TASTY;
+    }
+    else if(sweetOrNot >= 12)
+    {
+        display = SWEET;
+    }
+    if(display != -1)
+    {
+        oldManVoice[display].play();
+        Animation drop;
+        drop.setTexture(&oldManTexture[display]);
+        drop.setPosition(old_man_start_x, 0);
+        drop.setDest(old_man_start_x, old_man_start_y);
+        do
+        {
+            SDL_RenderClear(gRenderer);
+            renderFrame();
+            displayCandyBoard(gRenderer);
+            drop.fall(gRenderer);
+            SDL_RenderPresent(gRenderer);
+            _sleep(10);
+        } while(drop.getStatus() != STANDING_STILL);
+        //_sleep(200);
+    }
 }
 
 void CandyBoard::generateRandomBoard()
@@ -806,7 +817,7 @@ void CandyBoard::generateRandomBoard()
                     candyType = (CandyBreed)( ( (rand() % (int) NUMBER_OF_CANDY_TYPES) / 4)  * 4  );
                     //if(rand() % 10 == 1)
                 //    candyType = (CandyBreed) ((int) candyType + (int) WRAPPED);
-                } while(candyType == EMPTY || candyType == COLOUR_BOMB);
+                } while(candyType == EMPTY /* || candyType == COLOUR_BOMB */);
                 candies[i][j].setInfo(candyType, candyX, candyY);
             }
         for(int i = 0; i < mRows;i ++)
@@ -1270,7 +1281,7 @@ int CandyBoard::deleteBySpecialCandy(Candy* lCandy)
     }
 
     SDL_RenderPresent(gRenderer);
-    SDL_Delay(200);
+    delay(200);
 
     // deal with special candies separately
     for(int i = 0; i < special_candies.size(); i++)
@@ -1321,20 +1332,24 @@ int CandyBoard::deleteByColourBomb(Candy* lCandy)
     // if swap with another colour bomb -> delete all
     if(lCandy -> getBreed() == COLOUR_BOMB)
     {
-        printf("Colour bomb: X: %d Y: %d\n", getPositionX(lCandy->getX()), getPositionY(lCandy->getY()));
+        printf("Colour bomb: X: %d Y: %d and multiplier: %d\n", getPositionX(lCandy->getX()), getPositionY(lCandy->getY()), multiplier);
         for(int i = 0; i < mRows; i++)
             for(int j = 0; j < mColumns; j++)
             {
+                printf("Sum candy values: %d\n", sum_candy_values);
                 number_of_candy_deleted += 1;
                 Candy* tmp_candy = getCandy(j, i);
                 switch(tmp_candy->getType())
                 {
                 case NORMAL:
                     sum_candy_values += 60 * multiplier;
+                    break;
                 case STRIPED_H: case STRIPED_V:
                     sum_candy_values += 120 * multiplier;
+                    break;
                 case WRAPPED:
                     sum_candy_values += 540 * multiplier;
+                    break;
                 }
                 tmp_candy->setBreed(EMPTY);
                 // display each candy being delted
@@ -1342,10 +1357,11 @@ int CandyBoard::deleteByColourBomb(Candy* lCandy)
                 renderFrame();
                 displayCandyBoard(gRenderer);
                 SDL_RenderPresent(gRenderer);
-                SDL_Delay(30);
+                delay(30);
                 // play colour bomb sound
                 soundEffect[COLOUR_BOMB_DENOTATION].playOnce();
             }
+        printf("Sum candy values: %d\n", sum_candy_values);
     }
     // if swap with striped -> transform all into striped then explode everything
     else if(lCandy -> getType() == STRIPED_H || lCandy -> getType() == STRIPED_V)
@@ -1368,7 +1384,7 @@ int CandyBoard::deleteByColourBomb(Candy* lCandy)
                     renderFrame();
                     displayCandyBoard(gRenderer);
                     SDL_RenderPresent(gRenderer);
-                    SDL_Delay(30);
+                    delay(30);
                 }
             }
             // display after transformation
@@ -1376,7 +1392,7 @@ int CandyBoard::deleteByColourBomb(Candy* lCandy)
             renderFrame();
             displayCandyBoard(gRenderer);
             SDL_RenderPresent(gRenderer);
-            SDL_Delay(200);
+            delay(200);
 
         for(int i = 0; i < explode.size(); i++)
         {
@@ -1393,7 +1409,7 @@ int CandyBoard::deleteByColourBomb(Candy* lCandy)
                     renderFrame();
                     displayCandyBoard(gRenderer);
                     SDL_RenderPresent(gRenderer);
-                    SDL_Delay(200);
+                    delay(200);
 
                 }
         }
@@ -1418,7 +1434,7 @@ int CandyBoard::deleteByColourBomb(Candy* lCandy)
                     renderFrame();
                     displayCandyBoard(gRenderer);
                     SDL_RenderPresent(gRenderer);
-                    SDL_Delay(30);
+                    delay(30);
                 }
             }
             // display after transformation
@@ -1426,7 +1442,7 @@ int CandyBoard::deleteByColourBomb(Candy* lCandy)
             renderFrame();
             displayCandyBoard(gRenderer);
             SDL_RenderPresent(gRenderer);
-            SDL_Delay(200);
+            delay(200);
 
         for(int i = 0; i < explode.size(); i++)
         {
@@ -1443,7 +1459,7 @@ int CandyBoard::deleteByColourBomb(Candy* lCandy)
                     renderFrame();
                     displayCandyBoard(gRenderer);
                     SDL_RenderPresent(gRenderer);
-                    SDL_Delay(200);
+                    delay(200);
                 }
         }
     }
@@ -1462,10 +1478,13 @@ int CandyBoard::deleteByColourBomb(Candy* lCandy)
                     {
                     case NORMAL:
                         sum_candy_values += 60 * multiplier;
+                        break;
                     case STRIPED_H: case STRIPED_V:
                         sum_candy_values += 120 * multiplier;
+                        break;
                     case WRAPPED:
                         sum_candy_values += 540 * multiplier;
+                        break;
                     }
                     // it's special candy, use its effect
                     if(tmp_candy->getType() != NORMAL)
@@ -1481,7 +1500,7 @@ int CandyBoard::deleteByColourBomb(Candy* lCandy)
                         SDL_RenderPresent(gRenderer);
                          // play colour bomb sound before delaying
                         soundEffect[COLOUR_BOMB_DENOTATION].playOnce();
-                        SDL_Delay(100);
+                        delay(100);
                     }
 
                 }
