@@ -59,6 +59,9 @@ void Background::display()
     unsigned int counter = SDL_GetTicks();
     // change background every loop milisec
     unsigned int whichToDisplay = ((counter - mStartTime) / loop) % numberOfBackground;
+    unsigned int nextToDisplay = (whichToDisplay + 1) % numberOfBackground;
+    int whichAlpha = background[whichToDisplay].getAlpha();
+    int nextAlpha = background[nextToDisplay].getAlpha();
     //printf("which: %d counter %d start: %d\n", whichToDisplay, counter, mStartTime);
     // we will display everything but set their alpha to 0 and only set the chosen one to full alpha
     // only the one which will be changed has the alpha more than 0
@@ -67,9 +70,7 @@ void Background::display()
     if(counter + 1000 > ((counter + loop) / loop) * loop)
     {
         int fadeSpeed = 12;
-        int nextToDisplay = (whichToDisplay + 1) % numberOfBackground;
-        int whichAlpha = background[whichToDisplay].getAlpha();
-        int nextAlpha = background[nextToDisplay].getAlpha();
+
         // fade out
         background[whichToDisplay].setAlpha(std::max(whichAlpha - fadeSpeed, 0));
         // more clear
@@ -77,12 +78,23 @@ void Background::display()
         if(background[nextToDisplay].getAlpha() != 0xFF)
             background[nextToDisplay].setAlpha(0xFF);
     }
-
-     for(int i = numberOfBackground - 1; i >= 0; i--)
+    /*
+    if(nextAlpha != 0)
+        background[nextToDisplay].render(gRenderer, 0, 0);
+    if(whichAlpha != 0)
+        background[whichToDisplay].render(gRenderer, 0, 0);
+    */
+     for(int i = numberOfBackground; i >= 0; i--)
     //for(int i = 0; i < numberOfBackground; i++)
     {
-        if(background[i].getAlpha() != 0)
-            background[i].render(gRenderer, 0, 0);
+        int displayBackground = i % numberOfBackground;
+
+        // last background we do not want the [0] to display but instead the [numberOfBackground]
+        if(i == 0 && background[numberOfBackground - 1].getAlpha() != 0)
+            continue;
+
+        if(background[displayBackground].getAlpha() != 0)
+            background[displayBackground].render(gRenderer, 0, 0);
         //std::cout << background[i].pathToFile << std::endl;
     }
 }

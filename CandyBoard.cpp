@@ -66,7 +66,7 @@ void CandyBoard::handleEvent( SDL_Event* e )
 		//Get mouse position
 		int x, y;
 		int mouse_state = SDL_GetMouseState( &x, &y );
-        //printf("Mouse in X:%d Y:%d and mX %d mY %d\n", x, y, mX, mY);
+        // printf("Mouse in X:%d Y:%d and mX %d mY %d\n", x, y, mX, mY);
         // determine which candy it is
         if(x >= mX && x <= mX + mWidth && y >= mY && y <= mY + mHeight)
         {
@@ -272,8 +272,8 @@ void CandyBoard::handleEvent( SDL_Event* e )
 
                                 // delete the match
                                 // there is a match vertically -> delete
-                                CandyBreed last_type = getCandyCoord(last_candy_choosen.x, last_candy_choosen.y)->getBreed();
-                                CandyBreed cur_type = getCandyCoord(x, y)->getBreed();
+                                CandyBreed last_type = getCandyCoord(last_candy_choosen.x, last_candy_choosen.y)->getBreed() - getCandyCoord(last_candy_choosen.x, last_candy_choosen.y)->getType();
+                                CandyBreed cur_type = getCandyCoord(x, y)->getBreed() - getCandyCoord(x, y)->getType();
                                 SDL_RenderClear(gRenderer);
                                 renderFrame();
                                 displayCandyBoard(gRenderer);
@@ -611,7 +611,7 @@ int CandyBoard::reIndex()
         for(int y = 0; y < mRows; y++)
             for(int x = 0; x < mColumns; x++)
             {
-                CandyBreed cur_type = getCandy(x, y) -> getBreed();
+                CandyBreed cur_type = getCandy(x, y) -> getBreed() - getCandy(x, y) -> getType();
                 bool vertical_match = false;
                 int numb_v_match = countMatchInDirection(x, y, VERTICAL);
                 int numb_h_match = countMatchInDirection(x, y, HORIZONTAL);
@@ -1462,7 +1462,7 @@ int CandyBoard::deleteByColourBomb(Candy* lCandy)
                 Candy* tmp_candy = getCandy(j, i);
                 if(tmp_candy->equal(lCandy) && tmp_candy -> getType() == NORMAL)
                 {
-                    // get the COLOUR_NORMAL
+                    // get the COLOUR_NORMAL and add WRAPPED to it
                     CandyBreed trans_breed = (CandyBreed) ((int) lCandy->getBreed() - (int) lCandy->getType() + (int) WRAPPED );
                     tmp_candy->setBreed(trans_breed);
                     explode.push_back(tmp_candy);
