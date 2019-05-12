@@ -79,6 +79,20 @@ CandyType Candy::getType()
     return (CandyType) ret;
 }
 
+void Candy::swap(Candy* other)
+{
+    CandyBreed tmp_breed = this->getBreed();
+    this->setBreed(other->getBreed());
+    other->setBreed(tmp_breed);
+
+    bool tmp_is2ndWrapped = this->isUnwrapped();
+    this->is2ndWrapped = other->isUnwrapped();
+    if(tmp_is2ndWrapped == true)
+        other->makeUnwrapped();
+    else
+        other->makeNotUnwrapped();
+}
+
 void Candy::turnIntoNormal()
 {
     if(type == EMPTY || type == COLOUR_BOMB)

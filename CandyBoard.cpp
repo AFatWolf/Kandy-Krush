@@ -146,6 +146,12 @@ void CandyBoard::handleEvent( SDL_Event* e )
                 {
                     // swap
                     // meaning that it is adjacent cell and not itself
+                    int ddx = x - last_candy_choosen.x;
+                    int ddy = y - last_candy_choosen.y;
+                    // if its horizontal (ddx > ddy)
+                    x = last_candy_choosen.x + (abs(ddx) / ddx) * (abs(ddx) > abs(ddy)) * Candy::CandyWidth;
+                    // else if its vertical
+                    y = last_candy_choosen.y + (abs(ddy) / ddy) * (abs(ddy) >= abs(ddx)) * Candy::CandyHeight;
                     printf("Next choose: X %d Y %d\n", x, y);
                     if(abs(getPositionX(last_candy_choosen.x) - getPositionX(x)) + abs(getPositionY(last_candy_choosen.y) - getPositionY(y)) <= 1
                         && abs(getPositionX(last_candy_choosen.x) - getPositionX(x)) + abs(getPositionY(last_candy_choosen.y) - getPositionY(y)) != 0)
@@ -488,7 +494,8 @@ int CandyBoard::reIndex()
                         Candy* up_not_empty_candy = getCandy(x, y);
                         // swapping
                         // the down
-                        down_empty_candy->setBreed(up_not_empty_candy->getBreed());
+                        //down_empty_candy->setBreed(up_not_empty_candy->getBreed());
+                        down_empty_candy->swap(up_not_empty_candy);
                         // the up
                         up_not_empty_candy->setBreed(EMPTY);
                         // now is the new EMPTY
@@ -590,8 +597,17 @@ int CandyBoard::reIndex()
         // increase time
         times ++;
 
-        // count and match the match after falling and filling
-        // create special candy before matching normally
+        // delete unwrapped candy from wrapped candy first before matching
+        for(int y = 0; y < mRows; y++)
+            for(int x = 0; x < mColumns; x++)
+            {
+            if(getCandy(x, y) -> isUnwrapped() == true && getCandy(x, y) -> getType() == WRAPPED)
+                {
+                    deleteBySpecialCandy(getCandy(x, y));
+                    have_empty = true;
+                }
+            }
+
         for(int y = 0; y < mRows; y++)
             for(int x = 0; x < mColumns; x++)
             {
@@ -613,6 +629,32 @@ int CandyBoard::reIndex()
                     getCandy(x, y)->setBreed((CandyBreed) ((int) cur_type + (int) WRAPPED));
                     soundEffect[WRAPPED_CANDY_CREATED].play();
                 }
+            }
+        // count and match the match after falling and filling
+        // create special candy before matching normally
+        for(int y = 0; y < mRows; y++)
+            for(int x = 0; x < mColumns; x++)
+            {
+                CandyBreed cur_type = getCandy(x, y) -> getBreed();
+                bool vertical_match = false;
+                int numb_v_match = countMatchInDirection(x, y, VERTICAL);
+                int numb_h_match = countMatchInDirection(x, y, HORIZONTAL);
+                // create special candy
+                /*
+                if(numb_v_match >= 3 && numb_h_match >= 3)
+                {
+                    // delete match
+                    deleteMatchInDirection(x, y, VERTICAL);
+                    getCandy(x, y)->setBreed(cur_type);
+                    deleteMatchInDirection(x, y, HORIZONTAL);
+                    have_empty = true;
+
+                    gScoreNumber += 200;
+                    // become wrapped
+                    getCandy(x, y)->setBreed((CandyBreed) ((int) cur_type + (int) WRAPPED));
+                    soundEffect[WRAPPED_CANDY_CREATED].play();
+                }
+                */
                 // the bomb
                 if(numb_v_match >= 5 || numb_h_match >= 5)
                 {
@@ -660,11 +702,6 @@ int CandyBoard::reIndex()
                 bool vertical_match = false;
                 int numb_v_match = 0;
                 int numb_h_match = 0;
-                if(getCandy(x, y) -> isUnwrapped() == true && getCandy(x, y) -> getType() == WRAPPED)
-                {
-                    deleteBySpecialCandy(getCandy(x, y));
-                    have_empty = true;
-                }
                 if(countMatchInDirection(x, y, VERTICAL) >= 3)
                 {
                     numb_v_match = deleteMatchInDirection(x, y, VERTICAL);
@@ -817,7 +854,7 @@ void CandyBoard::generateRandomBoard()
                     candyType = (CandyBreed)( ( (rand() % (int) NUMBER_OF_CANDY_TYPES) / 4)  * 4  );
                     //if(rand() % 10 == 1)
                 //    candyType = (CandyBreed) ((int) candyType + (int) WRAPPED);
-                } while(candyType == EMPTY /* || candyType == COLOUR_BOMB */);
+                } while(candyType == EMPTY || candyType == COLOUR_BOMB);
                 candies[i][j].setInfo(candyType, candyX, candyY);
             }
         for(int i = 0; i < mRows;i ++)

@@ -59,7 +59,7 @@ int SCORE_BOARD_START_Y = 100;
 int MOVES_BOARD_START_X;
 int MOVES_BOARD_START_Y;
 
-int gNumberOfBackground = 7;
+int gNumberOfBackground = 6;
 
 int ANIMATION_MODE = false;
 
@@ -96,6 +96,8 @@ bool loadMedia();
 Texture* loadCandyTexture();
 
 void close();
+
+void delay(int miliseconds);
 
 void startAndEndScreen();
 
@@ -549,6 +551,22 @@ void close()
     SDL_Quit();
 }
 
+// wait for miliseconds
+void delay(int miliseconds)
+{
+    miliseconds = (unsigned int ) miliseconds;
+    unsigned int startTime = SDL_GetTicks();
+    unsigned int currentTime;
+    do
+    {
+        currentTime = SDL_GetTicks();
+        SDL_PumpEvents();
+    } while(currentTime - startTime < miliseconds);
+    SDL_FlushEvent(SDL_MOUSEBUTTONDOWN);
+    SDL_FlushEvent(SDL_MOUSEMOTION);
+    SDL_FlushEvent(SDL_MOUSEBUTTONUP);
+}
+
 void startAndEndScreen(Screen screen_type)
 {
     Texture start_screen;
@@ -589,7 +607,7 @@ void startAndEndScreen(Screen screen_type)
         SDL_RenderFillRect(gRenderer, &rect);
         drop.fall(gRenderer);
         SDL_RenderPresent(gRenderer);
-        SDL_Delay(10);
+        delay(10);
     } while(drop.getStatus() != STANDING_STILL);
 
     SDL_RenderClear(gRenderer);
@@ -599,7 +617,7 @@ void startAndEndScreen(Screen screen_type)
     SDL_RenderFillRect(gRenderer, &rect);
     start_screen.render(gRenderer, start_x, start_y);
     SDL_RenderPresent(gRenderer);
-    SDL_Delay(2000);
+    delay(2000);
 }
 
 bool startGame()
@@ -629,7 +647,6 @@ bool startGame()
             candyBoard.handleEvent(&e);
             if(!ANIMATION_MODE)
             {
-
                 SDL_RenderClear( gRenderer);
                 renderFrame();
                 candyBoard.displayCandyBoard(gRenderer);
@@ -658,20 +675,20 @@ bool startGame()
                 candyBoard.displayCandyBoard(gRenderer);
                 drop.fall(gRenderer);
                 SDL_RenderPresent(gRenderer);
-                SDL_Delay(10);
+                delay(10);
             } while(drop.getStatus() != STANDING_STILL);
-            SDL_Delay(1000);
+            delay(1000);
 
             // display board before
             SDL_RenderClear(gRenderer);
             renderFrame();
             candyBoard.displayCandyBoard(gRenderer);
             SDL_RenderPresent(gRenderer);
-            SDL_Delay(200);
+            delay(200);
 
             // start to sugar crush
             candyBoard.sugarCrush();
-            SDL_Delay(2000);
+            delay(2000);
 
             startAndEndScreen(WINNING_END_SCREEN);
         }

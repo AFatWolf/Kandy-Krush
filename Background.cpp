@@ -35,8 +35,6 @@ Background::~Background()
 
 void Background::addBackgroundFromFile(std::string pathToFile)
 {
-
-
     numberOfBackground += 1;
     int last = numberOfBackground - 1;
     background[last].loadFromFile(gRenderer, pathToFile);
@@ -46,7 +44,7 @@ void Background::addBackgroundFromFile(std::string pathToFile)
     if(numberOfBackground == 1)
     {
         background[last].setAlpha(0xFF);
-        mStartTime = time(0);
+        mStartTime = 0;
     }
     // invisible first if not the first one
     else
@@ -56,19 +54,19 @@ void Background::addBackgroundFromFile(std::string pathToFile)
 
 void Background::display()
 {
-    int loop = 5;
+    int loop = 5000;
     // per frame
-    time_t counter = time(0) - mStartTime;
-    int whichToDisplay = ((counter / loop) % numberOfBackground);
+    unsigned int counter = SDL_GetTicks();
+    // change background every loop milisec
+    unsigned int whichToDisplay = ((counter - mStartTime) / loop) % numberOfBackground;
+    //printf("which: %d counter %d start: %d\n", whichToDisplay, counter, mStartTime);
     // we will display everything but set their alpha to 0 and only set the chosen one to full alpha
     // only the one which will be changed has the alpha more than 0
     // see if we are going to change background
-    //background[whichToDisplay].setAlpha(0xFF);
-    //background[(whichToDisplay + numberOfBackground - 1)  % numberOfBackground].setAlpha(0);
 
-    if(counter + 10 > ((counter + 1) / loop) * loop)
+    if(counter + 1000 > ((counter + loop) / loop) * loop)
     {
-        int fadeSpeed = 8;
+        int fadeSpeed = 12;
         int nextToDisplay = (whichToDisplay + 1) % numberOfBackground;
         int whichAlpha = background[whichToDisplay].getAlpha();
         int nextAlpha = background[nextToDisplay].getAlpha();
@@ -76,11 +74,12 @@ void Background::display()
         background[whichToDisplay].setAlpha(std::max(whichAlpha - fadeSpeed, 0));
         // more clear
         // background[nextToDisplay].setAlpha(std::min(nextAlpha + fadeSpeed, 0xFF));
-        if(background[nextToDisplay].getAlpha() == 0)
+        if(background[nextToDisplay].getAlpha() != 0xFF)
             background[nextToDisplay].setAlpha(0xFF);
     }
 
-    for(int i = numberOfBackground; i >= 0; i--)
+     for(int i = numberOfBackground - 1; i >= 0; i--)
+    //for(int i = 0; i < numberOfBackground; i++)
     {
         if(background[i].getAlpha() != 0)
             background[i].render(gRenderer, 0, 0);

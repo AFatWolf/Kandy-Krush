@@ -18,6 +18,9 @@
 #include "Audio.h"
 #endif // AUDIO_H
 
+extern void renderFrame();
+extern void delay(int );
+
 extern int SCREEN_WIDTH;
 extern int SCREEN_HEIGHT;
 extern int CANDY_BOARD_START_X;
@@ -25,7 +28,6 @@ extern int CANDY_BOARD_START_Y;
 const int FALLING_ACCELERATOR = 1;
 extern Texture* mCandyTexture;
 extern SDL_Renderer* gRenderer;
-extern void renderFrame();
 extern int ANIMATION_MODE;
 extern int gNumberOfBackground;
 extern TTF_Font* gCandiceFont;

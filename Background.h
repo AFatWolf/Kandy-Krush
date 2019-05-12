@@ -18,5 +18,5 @@ private:
     std::vector<Texture> background;
     int numberOfBackground;
     // to change background
-    time_t mStartTime;
+    unsigned int mStartTime;
 };

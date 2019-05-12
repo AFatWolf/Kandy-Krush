@@ -39,7 +39,7 @@ bool Texture::loadFromFile(SDL_Renderer* lRenderer, std::string path)
     {
         pathToFile = path;
         // set (0xFF,0xFF,0xFF) / white as transparent pixel
-        SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface-> format, 0xFF, 0xFF, 0xFF));
+        SDL_SetColorKey( loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface-> format, 255, 255, 254));
 
         newTexture = SDL_CreateTextureFromSurface(lRenderer, loadedSurface);
         if(!newTexture)

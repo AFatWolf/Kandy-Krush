@@ -73,6 +73,7 @@ public:
     CandyBreed getBreed();
     void setInfo(CandyBreed lCandy = EMPTY, int lX = 0, int lY = 0);
     void setBreed(CandyBreed );
+    void swap(Candy* other);
     void turnIntoNormal();
     CandyType getType();
     Texture* getTexture();
