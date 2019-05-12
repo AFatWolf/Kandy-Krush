@@ -272,8 +272,8 @@ void CandyBoard::handleEvent( SDL_Event* e )
 
                                 // delete the match
                                 // there is a match vertically -> delete
-                                CandyBreed last_type = getCandyCoord(last_candy_choosen.x, last_candy_choosen.y)->getBreed() - getCandyCoord(last_candy_choosen.x, last_candy_choosen.y)->getType();
-                                CandyBreed cur_type = getCandyCoord(x, y)->getBreed() - getCandyCoord(x, y)->getType();
+                                CandyBreed last_type = (CandyBreed) ((int)getCandyCoord(last_candy_choosen.x, last_candy_choosen.y)->getBreed() - (int) getCandyCoord(last_candy_choosen.x, last_candy_choosen.y)->getType());
+                                CandyBreed cur_type = (CandyBreed) ((int) getCandyCoord(x, y)->getBreed() - (int) getCandyCoord(x, y)->getType());
                                 SDL_RenderClear(gRenderer);
                                 renderFrame();
                                 displayCandyBoard(gRenderer);
@@ -551,6 +551,8 @@ int CandyBoard::reIndex()
         bool falling = true;
         do
         {
+            // reset
+            falling = false;
             SDL_RenderClear(gRenderer);
             renderFrame();
 
@@ -562,9 +564,9 @@ int CandyBoard::reIndex()
             {
                 // now fall
                 fallCandy[i].fall(gRenderer);
-                if(fallCandy[i].getStatus() != FALLING)
+                if(fallCandy[i].getStatus() == FALLING)
                 {
-                    falling = false;
+                    falling = true;
                     //break;
                 }
             }
@@ -611,7 +613,7 @@ int CandyBoard::reIndex()
         for(int y = 0; y < mRows; y++)
             for(int x = 0; x < mColumns; x++)
             {
-                CandyBreed cur_type = getCandy(x, y) -> getBreed() - getCandy(x, y) -> getType();
+                CandyBreed cur_type = (CandyBreed) ((int) getCandy(x, y) -> getBreed() - (int) getCandy(x, y) -> getType());
                 bool vertical_match = false;
                 int numb_v_match = countMatchInDirection(x, y, VERTICAL);
                 int numb_h_match = countMatchInDirection(x, y, HORIZONTAL);
