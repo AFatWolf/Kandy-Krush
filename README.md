@@ -1,4 +1,13 @@
 # Kandy-Krush
-A Kandy Krush game for simple people who can be easily satisfied with swapping stuff.
-Created using SDL and C++.
-Uploaded date: 7/5/2019
+Game "Kandy Krush" cho những người đơn giản.
+
+Ngày upload: 7/5/2019
+Báo cáo: "Game Report.docx"
+
+# Hướng dẫn
+- Download về và unzip.
+- Mở file "Candy Crush.exe" ra.
+- Enjoy!
+
+
+
