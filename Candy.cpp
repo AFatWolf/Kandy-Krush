@@ -75,7 +75,7 @@ CandyType Candy::getType()
     if(type == EMPTY || type == COLOUR_BOMB)
         return NORMAL;
     int ret = (int) type;
-    ret = type - (type / 4) * 4;
+    ret = ret - (ret / 4) * 4;
     return (CandyType) ret;
 }
 

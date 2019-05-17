@@ -83,67 +83,43 @@ void CandyBoard::handleEvent( SDL_Event* e )
                     }
                     break;
                 }
-            /*
-            case SDL_MOUSEMOTION:
-                if(mouse_state & SDL_BUTTON(SDL_BUTTON_LEFT) && last_candy_choosen.x >= 0 && last_candy_choosen.y >= 0)
-                {
-                    if(x != last_candy_choosen.x && y != last_candy_choosen.y)
-                    {
-                        // change the last candy coord
 
-                        Candy* cur_candy = getCandyCoord(last_candy_choosen.x, last_candy_choosen.y);
-                        int candy_X = cur_candy->getX();
-                        int candy_Y = cur_candy->getY();
-                        int center_X = candy_X + Candy::CandyWidth / 2;
-                        int center_Y = candy_Y + Candy::CandyHeight / 2;
-                        int dx = x - last_candy_choosen.x;
-                        int dy = y - last_candy_choosen.y;
-                        int new_x = candy_X;
-                        int new_y = candy_Y;
-                        if(abs(dx) > abs(dy))
-                            new_x += dx;
-                        else
-                            new_y += dy;
-                        if(x >= center_X && x <= center_X + Candy::CandyWidth && x >= center_Y && y <= center_Y + Candy::CandyHeight)
-                        {
-                            if(abs(new_x - center_X) < Candy::CandyWidth * 2 && abs(new_y - center_Y) < Candy::CandyHeight * 2)
-                            {
-
-                                printf("X %d Y %d NX %d NY %d dx %d dy %d\n", x, y, candy_X, candy_Y, dx, dy);
-                                SDL_RenderClear(gRenderer);
-                                renderFrame();
-                                for(int i = 0; i < mRows; i++)
-                                    for(int j = 0; j < mColumns; j++)
-                                    {
-                                        Candy* tmp = getCandy(i , j);
-                                        if(tmp != cur_candy)
-                                        {
-                                            tmp->render(gRenderer);
-                                        }
-                                    }
-                                cur_candy->render(gRenderer, new_x, new_y);
-                                ANIMATION_MODE = 1;
-                                SDL_RenderPresent(gRenderer);
-                                // if the cursor still in that candy
-                            }
-                            else
-                            {
-                                last_candy_choosen = {-2, -2};
-                                ANIMATION_MODE = false;
-                            }
-                        }
-                        else
-                        {
-                            ANIMATION_MODE = false;
-                        }
-                    }
-                    break;
-                }
-            */
             case SDL_MOUSEBUTTONUP:
                 printf("Choose X %d y %d\n", x, y);
+                // if outside the board
+                if(x < mX || y < mY || x > mX + mWidth || y > mY + mHeight)
+                {
+                    last_candy_choosen = {-1, -1};
+                    ANIMATION_MODE = false;
+                    break;
+                }
+                // choose a candy
+                if(last_candy_choosen.x == x && last_candy_choosen.y == y)
+                {
+                    SDL_RenderClear(gRenderer);
+                    renderFrame();
+                    displayCandyBoard(gRenderer);
+                    // set render draw color to Orange
+                    SDL_SetRenderDrawColor(gRenderer, 255, 165, 0, 255);
+                    SDL_Rect rect = {mX + getPositionX(x) * Candy::CandyWidth,
+                                    mY + getPositionY(y) * Candy::CandyHeight,
+                                    Candy::CandyWidth,
+                                    Candy::CandyHeight
+                                    };
+                    SDL_RenderDrawRect(gRenderer, &rect);
+                    SDL_RenderPresent(gRenderer);
+                    ANIMATION_MODE = true;
+                    break;
+                }
                 if(last_candy_choosen.x != -1 && last_candy_choosen.y != -1 && x != last_candy_choosen.x && y != last_candy_choosen.y)
                 {
+                    if(abs(getPositionX(last_candy_choosen.x) - getPositionX(x)) + abs(getPositionY(last_candy_choosen.y) - getPositionY(y)) >= 2
+                        && abs(getPositionX(last_candy_choosen.x) - getPositionX(x)) + abs(getPositionY(last_candy_choosen.y) - getPositionY(y)) != 0)
+                        {
+                                last_candy_choosen = {x, y};
+                                ANIMATION_MODE = false;
+                                break;
+                        }
                     // swap
                     // meaning that it is adjacent cell and not itself
                     int ddx = x - last_candy_choosen.x;
@@ -271,9 +247,14 @@ void CandyBoard::handleEvent( SDL_Event* e )
                                 gMoves -= 1;
 
                                 // delete the match
-                                // there is a match vertically -> delete
-                                CandyBreed last_type = (CandyBreed) ((int)getCandyCoord(last_candy_choosen.x, last_candy_choosen.y)->getBreed() - (int) getCandyCoord(last_candy_choosen.x, last_candy_choosen.y)->getType());
-                                CandyBreed cur_type = (CandyBreed) ((int) getCandyCoord(x, y)->getBreed() - (int) getCandyCoord(x, y)->getType());
+
+                                // normal candy is used in case there is both ver and hor match but the before set the candy to EMPTY
+                                CandyBreed normal_last_type = (CandyBreed) ((int)getCandyCoord(last_candy_choosen.x, last_candy_choosen.y)->getBreed() - (int) getCandyCoord(last_candy_choosen.x, last_candy_choosen.y)->getType());
+                                CandyBreed last_type = getCandyCoord(last_candy_choosen.x, last_candy_choosen.y)->getBreed();
+
+                                CandyBreed normal_cur_type = (CandyBreed) ((int) getCandyCoord(x, y)->getBreed() - (int) getCandyCoord(x, y)->getType());
+                                CandyBreed cur_type = getCandyCoord(x, y)->getBreed();
+
                                 SDL_RenderClear(gRenderer);
                                 renderFrame();
                                 displayCandyBoard(gRenderer);
@@ -284,23 +265,33 @@ void CandyBoard::handleEvent( SDL_Event* e )
                                 if(last_candy_vertical_match >= 3)
                                 {
                                     // set to current state of the candy because the delete() base on the condition that the current candy is not EMPTY
-                                    getCandyCoord(last_candy_choosen.x, last_candy_choosen.y)->setBreed(last_type);
+                                    // getCandyCoord(last_candy_choosen.x, last_candy_choosen.y)->setBreed(last_type);
                                     deleteMatchInDirectionCoord(last_candy_choosen.x, last_candy_choosen.y, VERTICAL);
+                                    // reset for hor match
+                                    getCandyCoord(last_candy_choosen.x, last_candy_choosen.y)->setBreed(normal_last_type);
                                 }
                                 if(last_candy_horizontal_match >= 3)
                                 {
-                                    getCandyCoord(last_candy_choosen.x, last_candy_choosen.y)->setBreed(last_type);
+                                    // getCandyCoord(last_candy_choosen.x, last_candy_choosen.y)->setBreed(last_type);
                                     deleteMatchInDirectionCoord(last_candy_choosen.x, last_candy_choosen.y, HORIZONTAL);
                                 }
+                                // reset
+                                if(last_candy_vertical_match >= 3)
+                                    getCandyCoord(last_candy_choosen.x, last_candy_choosen.y)->setBreed(EMPTY);
                                 if(current_candy_vertical_match >= 3)
                                 {
-                                    getCandyCoord(x, y)->setBreed(cur_type);
+                                    // getCandyCoord(x, y)->setBreed(cur_type);
                                     deleteMatchInDirectionCoord(x, y, VERTICAL);
+                                    getCandyCoord(x, y)->setBreed(normal_cur_type);
                                 }
                                 if(current_candy_horizontal_match >= 3)
                                 {
-                                    getCandyCoord(x, y)->setBreed(cur_type);
+                                    // (x, y)->setBreed(cur_type);
                                     deleteMatchInDirectionCoord(x, y, HORIZONTAL);
+                                }
+                                if(current_candy_vertical_match >= 3)
+                                {
+                                    getCandyCoord(x, y)->setBreed(EMPTY);
                                 }
 
                                 // now case it creates special candy
@@ -308,13 +299,13 @@ void CandyBoard::handleEvent( SDL_Event* e )
                                 if(last_candy_horizontal_match >= 3 && last_candy_vertical_match >= 3)
                                 {
                                     // becoming wrapped candy
-                                    last_candy->setBreed( (CandyBreed) ((int) last_type + (int )WRAPPED));
+                                    last_candy->setBreed( (CandyBreed) ((int) normal_last_type + (int )WRAPPED));
                                     gScoreNumber += 200;
                                     // play wrapped sound
                                     soundEffect[WRAPPED_CANDY_CREATED].play();
                                 }
                                 // COLOUR BOMB case
-                                if(last_candy_vertical_match >= 5 || last_candy_horizontal_match >= 5)
+                                else if(last_candy_vertical_match >= 5 || last_candy_horizontal_match >= 5)
                                 {
                                     last_candy->setBreed(COLOUR_BOMB);
                                     gScoreNumber += 200;
@@ -326,14 +317,14 @@ void CandyBoard::handleEvent( SDL_Event* e )
                                 {
                                     if(last_candy_horizontal_match >= 4)
                                     {
-                                        last_candy->setBreed((CandyBreed) ((int) last_type + (int) STRIPED_H));
+                                        last_candy->setBreed((CandyBreed) ((int) normal_last_type + (int) STRIPED_H));
                                         gScoreNumber += 120;
                                         // play create sound
                                         soundEffect[STRIPED_CANDY_CREATE].play();
                                     }
                                     if(last_candy_vertical_match >= 4)
                                     {
-                                        last_candy->setBreed((CandyBreed) ((int) last_type + (int) STRIPED_V));
+                                        last_candy->setBreed((CandyBreed) ((int) normal_last_type + (int) STRIPED_V));
                                         gScoreNumber += 120;
                                         // play create sound
                                         soundEffect[STRIPED_CANDY_CREATE].play();
@@ -343,13 +334,13 @@ void CandyBoard::handleEvent( SDL_Event* e )
                                 if(current_candy_horizontal_match >= 3 && current_candy_vertical_match >= 3)
                                 {
                                     // becoming wrapped candy
-                                    current_candy->setBreed((CandyBreed) ((int) cur_type + (int) WRAPPED));
+                                    current_candy->setBreed((CandyBreed) ((int) normal_cur_type + (int) WRAPPED));
                                     gScoreNumber += 200;
                                     soundEffect[WRAPPED_CANDY_CREATED].play();
                                 }
 
                                 // COLOUR BOMB case
-                                if(current_candy_horizontal_match >= 5 || current_candy_vertical_match >= 5)
+                                else if(current_candy_horizontal_match >= 5 || current_candy_vertical_match >= 5)
                                 {
                                     current_candy->setBreed(COLOUR_BOMB);
                                     gScoreNumber += 200;
@@ -360,14 +351,14 @@ void CandyBoard::handleEvent( SDL_Event* e )
                                 {
                                     if(current_candy_horizontal_match >= 4)
                                     {
-                                        current_candy->setBreed((CandyBreed) ((int) cur_type + (int) STRIPED_H));
+                                        current_candy->setBreed((CandyBreed) ((int) normal_cur_type + (int) STRIPED_H));
                                         gScoreNumber += 120;
                                         soundEffect[STRIPED_H].play();
                                     }
 
                                     if(current_candy_vertical_match >= 4)
                                     {
-                                        current_candy->setBreed((CandyBreed) ((int) cur_type + (int) STRIPED_V));
+                                        current_candy->setBreed((CandyBreed) ((int) normal_cur_type + (int) STRIPED_V));
                                         gScoreNumber += 120;
                                         soundEffect[STRIPED_V].play();
                                     }
@@ -431,8 +422,8 @@ void CandyBoard::handleEvent( SDL_Event* e )
                     //reset
                     last_candy_choosen = {-1, -1};
                     ANIMATION_MODE = false;
-                    break;
                 }
+                break;
             }
         }
     }
@@ -1082,18 +1073,20 @@ int CandyBoard::deleteMatchInDirection(int lX, int lY, DIRECTION direction)
         break;
     }
     // if the cur_candy is a special candy?
-    if(cur_candy->getType() != NORMAL)
+    if(cur_candy -> getType() != NORMAL)
+    {
         specialCandy.push_back(cur_candy);
+    }
     else
+    {
         cur_candy->setBreed(EMPTY);
+    }
 
-    printf("Candy Size: %d\n", specialCandy.size());
 
     for(int i = 0; i < specialCandy.size(); i++)
     {
         deleteBySpecialCandy(specialCandy[i]);
     }
-    printf("Number of candy deleted %d\n", number_of_candy_deleted);
     // update score
     // can be changed
     gScoreNumber += (number_of_candy_deleted + 1) * 40 * multiplier;
@@ -1113,7 +1106,6 @@ int CandyBoard::deleteBySpecialCandy(Candy* lCandy)
     int posY = getPositionY(lCandy -> getY());
     // special candy in the way!
     std::vector<Candy*> special_candies;
-    printf("X: %d Y: %d\n", posX, posY);
     // to avoid the dead end loop of recursion
     lCandy->setBreed(EMPTY);
     switch(type)
