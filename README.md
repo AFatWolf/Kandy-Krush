@@ -1,5 +1,5 @@
 # Kandy-Krush
-"Candy Crush" for easygoing reasons.
+"Candy Crush" for easygoing people.
 
 Upload date: 7/5/2019
 
