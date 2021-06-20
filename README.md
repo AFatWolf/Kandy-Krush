@@ -1,13 +1,12 @@
 # Kandy-Krush
-Game "Kandy Krush" cho những người đơn giản.
+"Candy Crush" for easygoing reasons.
 
-Ngày upload: 7/5/2019
-Báo cáo: "Game Report.docx"
+Upload date: 7/5/2019
 
-# Hướng dẫn
-- Download về và unzip.
-- Mở file "Candy Crush.exe" ra.
-- Enjoy!
+# How to play
+1. Download and unzip it.
+2. Open file "Candy Crush.exe".
+3. Enjoy!
 
 
 
